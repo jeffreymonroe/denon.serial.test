@@ -40,11 +40,11 @@ dotnet Denon.Serial.Test.dll
 
 ## Setup
 There are great internet resources regarding connecting to the RS232 on Denon AVRs. I waded through a number of them but wanted to distill the important aspects needed for this repository.
--- Connect your computer and AVR using a straight through M/F serial cable.
--- If using a SBC, the easiest way to surface a serial connection is using a USB to RS232 converter.
--- The RS232, at least on my AVR, will transmit data when the AVR state is changed from the front panel or any other controlling device.
--- The control protocol supported, at least on my AVR, is a subset of the full control protocol that the telnet control mechanism uses.
--- When transmitting commands to the AVR, the ending carriage return '\r' is not needed.
+- Connect your computer and AVR using a straight through M/F serial cable.
+- If using a SBC, the easiest way to surface a serial connection is using a USB to RS232 converter.
+- The RS232, at least on my AVR, will transmit data when the AVR state is changed from the front panel or any other controlling device.
+- The control protocol supported, at least on my AVR, is a subset of the full control protocol that the telnet control mechanism uses.
+- When transmitting commands to the AVR, the ending carriage return '\r' is not needed.
 
 ## Usage
 
