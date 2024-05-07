@@ -46,5 +46,22 @@ There are great internet resources regarding connecting to the RS232 on Denon AV
 - The control protocol supported, at least on my AVR, is a subset of the full control protocol that the telnet control mechanism uses.
 - When transmitting commands to the AVR, the ending carriage return '\r' is not needed.
 
-## Usage
+## Example Usage
+```
+echo $(dotnet Denon.Serial.Test.dll -n /dev/ttyUSB0 -c "PW?" -q)
+```
+Run the master power status command and return the received data to the cli output
+
+```
+dotnet Denon.Serial.Test.dll -n /dev/ttyUSB0
+```
+Enter interactive mode to run commands from the command line
+
+##Attribution
+This project utilizes open source code. The following are some of the repositories used:
+- [serialport-lib-dotnet](https://github.com/genielabs/serialport-lib-dotnet)
+- [commandline](https://github.com/commandlineparser/commandline)
+
+##License
+
 
