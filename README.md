@@ -57,11 +57,11 @@ dotnet Denon.Serial.Test.dll -n /dev/ttyUSB0
 ```
 Enter interactive mode to run commands from the command line
 
-##Attribution
+## Attribution
 This project utilizes open source code. The following are some of the repositories used:
 - [serialport-lib-dotnet](https://github.com/genielabs/serialport-lib-dotnet)
 - [commandline](https://github.com/commandlineparser/commandline)
 
-##License
-
+## License
+This repository is open source software and licensed under the terms of [GNU GENERAL PUBLIC LICENSE](LICENSE).
 
