@@ -57,6 +57,13 @@ dotnet Denon.Serial.Test.dll -n /dev/ttyUSB0
 ```
 Enter interactive mode to run commands from the command line
 
+```
+function dst() {
+  (cd $HOME/denon.serial.test && $HOME/.dotnet/dotnet $HOME/denon.serial.test/Denon.Serial.Test.dll "$@")
+}
+```
+This creates a command alias `dst` for easy usage. Place this code in your account startup script like `.bashrc`. Make sure the paths to .Net and this program are correct for your environment.
+
 ## Attribution
 This project utilizes open source code. The following are some of the repositories used:
 - [serialport-lib-dotnet](https://github.com/genielabs/serialport-lib-dotnet)
