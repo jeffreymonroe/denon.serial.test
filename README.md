@@ -1,6 +1,12 @@
 # denon.serial.test
 Serial communications cli for testing the Denon RS232 control protocaol
 
+## Features
+- Can be run in interactive and single command modes.
+- Has option to display HEX values of transmitted and received data.
+- Allows configuration of serial port.
+- Has adjustable recieved data timeout to allow for multiple transmissions from AVR.
+
 ## Purpose
 Like many of you, I have grown tired of purchasing single purposes devices to interconnect my home. I am on a mission to unify all this using open source tools and cheap single board computers (SBC). This is the first in a series of repositories which I have been using for years to accomplish my mission.
 
