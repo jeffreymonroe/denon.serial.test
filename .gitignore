@@ -1,0 +1,9 @@
+# Build output
+bin/
+obj/
+
+# Visual Studio / IDE state (per user, per machine)
+.vs/
+.idea/
+*.user
+*.suo

@@ -1,23 +1,27 @@
 ﻿using CommandLine;
+using Denon.Serial.Test;
 using Microsoft.Extensions.Configuration;
+using SerialPortLib;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
-using Denon.Serial.Test;
+using System.Collections.Concurrent;
 using System.Reflection;
-using SerialPortLib;
 using System.Text;
 using System.Timers;
-using System.Threading;
 
 CommandLine.Parser.Default.ParseArguments<OptionsMutuallyExclusive>(args)
   .WithParsed(RunProcess)
   .WithNotParsed(HandleParseError);
 
+
 static void RunProcess(OptionsMutuallyExclusive opts)
 {
+
     int exitCode = 0;
     System.Timers.Timer responseWaitTimer;
+
+    AssemblyMarker assemMarker = new();
 
     // Get default App Configuration
     var appConfig = new ConfigurationBuilder()
@@ -33,11 +37,17 @@ static void RunProcess(OptionsMutuallyExclusive opts)
             .MinimumLevel.ControlledBy(loggerLevelSwitch)
             .CreateLogger();
 
+    // Send SerialPortLib's log messages through Serilog (the "Serilog" section of appsettings.json,
+    // Information and above). By default it wrote debug lines straight to the console, in the
+    // middle of the command being typed.
+    GLabs.Logging.LogManager.Initialize(new Serilog.Extensions.Logging.SerilogLoggerFactory(Log.Logger));
+
     var serialPort = new SerialPortInput();
+    var lineReader = new CommandLineReader(CommandLineReader.DefaultHistoryFile("denon.serial.test"), excludeFromHistory: new[] { "q" });
 
     try
     {
-        String inputCommand;
+        String? inputCommand;
         StringBuilder responseCache = new();
         Boolean comPortConnected = false;
         Boolean responseReady = false;
@@ -46,7 +56,7 @@ static void RunProcess(OptionsMutuallyExclusive opts)
 
 
         // Message header
-        if (!opts.Quiet) Console.WriteLine($"Denon.Serial.Test {Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion}");
+        if (!opts.Quiet) Console.WriteLine(assemMarker.AppNameVersion);
 
 
         // Setup serial port
@@ -79,7 +89,8 @@ static void RunProcess(OptionsMutuallyExclusive opts)
             }
             else
             {
-                if (!opts.Quiet) Console.Write("\b\b\b\b\b\b\b\b\bChatter: {0}\nCommand: ", response);
+                // Shown above the command being typed, which is then redrawn below it.
+                if (!opts.Quiet) lineReader.WriteAbove($"Chatter: {response}");
             }
 
         };
@@ -113,10 +124,9 @@ static void RunProcess(OptionsMutuallyExclusive opts)
             }
             else
             {
-                // Get input
-                Console.Write("Command: ");
-                inputCommand = Console.ReadLine();
-                if (inputCommand == "q") { break;  }
+                // Get input (Up/Down arrows recall earlier commands)
+                inputCommand = lineReader.ReadLine("Command: ");
+                if (inputCommand is null || inputCommand == "q") { break; }
             }
 
             // Send command to serial port, wait for response
