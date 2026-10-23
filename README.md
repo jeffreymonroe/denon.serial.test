@@ -1,3 +1,10 @@
+ # This repository has moved
+
+ Denon.Serial.Test is now part of **[denon-controller](https://github.com/jeffreymonroe/denon-controller)**,
+ in the [`Denon.Serial.Test`](https://github.com/jeffreymonroe/denon-controller/tree/main/Denon.Serial.Test) folder.
+
+ This repository is archived and no longer updated.
+
 # denon.serial.test
 Serial communications cli for testing the Denon RS232 control protocaol
 
